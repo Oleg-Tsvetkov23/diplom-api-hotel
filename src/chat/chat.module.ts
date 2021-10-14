@@ -13,7 +13,7 @@ import { SupportRequestSchema, SupportRequest } from './supportrequest.model';
         UserModule
     ],
     controllers: [ChatController],
-    providers: [/*ChatGateway,*/ ChatService],
+    providers: [ChatService],
     exports: [ChatService]    
 })
 export class ChatModule {}

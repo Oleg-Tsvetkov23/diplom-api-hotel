@@ -14,9 +14,9 @@ export class ChatController {
 
     @UseGuards(AuthenticatedGuard, RoleGuard)
     @SetMetadata('roles', ['client'])    
-    @Post('/api/client/support-requests/')
+    @Post('/api/client/support-requests')
     async clientSupportRequest(@Body() data: any, @Request() req) : Promise<any> {
         console.log("user",req.user.id);
-        return null;
+        return this.chatService.createSupportRequest(data);
     }
 }

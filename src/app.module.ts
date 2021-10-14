@@ -10,6 +10,7 @@ import { ReservationModule } from './reservation/reservation.module';
 import "dotenv/config";
 import { ChatGateway } from './chat/chat.gateway';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ChatModule } from './chat/chat.module';
 
 
 @Module({
@@ -20,6 +21,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     HotelRoomModule,
     ReservationModule,
     EventEmitterModule.forRoot(),
+    ChatModule
   ],
   controllers: [AppController ],
   providers: [AppService, ChatGateway],
