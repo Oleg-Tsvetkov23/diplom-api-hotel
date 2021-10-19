@@ -32,7 +32,7 @@ export class SupportRequest extends Document {
 const SupportRequestSchema = SchemaFactory.createForClass(SupportRequest);
 
 SupportRequestSchema.set('toJSON',{virtuals:true,  versionKey:false,
-    transform: function (doc, ret) {   delete ret._id  }});
+    transform: function (doc, ret) {   delete ret._id,  delete ret.user}});
 
 const virtual1 = SupportRequestSchema.virtual('client');
 virtual1.get(function(value, virtual, doc) {

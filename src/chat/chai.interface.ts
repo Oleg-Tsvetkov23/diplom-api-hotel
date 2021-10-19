@@ -26,7 +26,7 @@ export interface GetChatListParams {
   
 export interface ISupportRequestService {
     findSupportRequests(params: GetChatListParams): Promise<SupportRequest[]>;
-//    sendMessage(data: SendMessageDto): Promise<Message>;
+    sendMessage(data: SendMessageDto): Promise<Message>;
     getMessages(supportRequest: ID): Promise<Message[]>;
 //    subscribe(
 //      handler: (supportRequest: SupportRequest, message: Message) => void
@@ -35,7 +35,7 @@ export interface ISupportRequestService {
   
 export interface ISupportRequestClientService {
     createSupportRequest(data: CreateSupportRequestDto): Promise<SupportRequest[]>;
-//    markMessagesAsRead(params: MarkMessagesAsReadDto);
+    markMessagesAsReadClient(params: MarkMessagesAsReadDto);
 //    getUnreadCount(supportRequest: ID): Promise<Message[]>;
 }
   

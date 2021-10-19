@@ -22,4 +22,16 @@ export class Message extends Document {
     readAt: Date;
 }
 
-export const MessageSchema = SchemaFactory.createForClass(Message);
+const MessageSchema = SchemaFactory.createForClass(Message);
+
+MessageSchema.set('toJSON',{virtuals:true,  versionKey:false,
+    transform: function (doc, ret) {   delete ret._id, delete ret.sentAt}});
+
+const virtual1 = MessageSchema.virtual('createdAt');
+virtual1.get(function(value, virtual, doc) {
+    return this.sentAt;
+});
+
+export {
+    MessageSchema
+}
