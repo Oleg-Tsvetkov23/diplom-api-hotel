@@ -63,8 +63,6 @@ export class UserService implements IUserService {
             */
            $and: arr
         }
-        console.log("options",options)
-        console.log("req--->",this.req.url)
 
         return this.userModel
         .find(options)

@@ -1,6 +1,5 @@
 import { Body, Controller, Post, UseGuards, Request, Get, UsePipes, Query, Param, BadRequestException } from "@nestjs/common";
 import { ChatService } from "./chat.service";
-import { UserService } from "src/user/users.service";
 import { AuthenticatedGuard } from '../auth/guards/autentificate.guard';
 import { RoleGuard } from '../auth/guards/role.guard';
 import { SetMetadata } from '@nestjs/common';
@@ -12,7 +11,6 @@ import { ParseMongoIDPipe } from 'src/pipe/mongoID.pipe';
 export class ChatController {
     constructor (
         private readonly chatService : ChatService,
-        private readonly userService : UserService,
     ){}
 
     @UseGuards(AuthenticatedGuard, RoleGuard)
@@ -41,7 +39,6 @@ export class ChatController {
     async getManagerSupportRequest(@Query() data, @Request() req) : Promise<any> {
         data.user = null;
         data.isActive = data.isActive ? data.isActive : true;
-        console.log("data",data)
         return this.chatService.findSupportRequests(data);
     }
 
@@ -67,8 +64,23 @@ export class ChatController {
         return this.chatService.sendMessage(data);
     }
 
-    @Get('/api/test/:id')
-    async getCount(@Param('id', new ParseMongoIDPipe) id : string) : Promise<any> {
-        return this.chatService.getUnreadCount(id);
+
+    @UseGuards(AuthenticatedGuard, RoleGuard)
+    @SetMetadata('roles', ['manager','client']) 
+//    @UsePipes(new JoiValidationPipe(joiCreateChat)) 
+    @Post('/api/common/support-requests/:id/messages/read')
+    async markUnreadMessage(@Param('id', new ParseMongoIDPipe) id : string,   @Request() req, @Body() d : any) : Promise<any> {
+        const data = {
+            user: req.user.id,
+            supportRequest: id,
+            createdBefore: d.createdBefore
+          }
+        if (req.user.role == 'client') {
+            this.chatService.markMessagesAsReadClient(data)
+        } else {
+            this.chatService.markMessagesAsRead(data)
+        }
+        this.chatService.markHasNewMessages(data);
+        return {"success": true}
     }
 }

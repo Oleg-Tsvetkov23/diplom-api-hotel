@@ -11,16 +11,20 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
-      const socket = io('http://localhost:3000');
+      var options = {
+            allowUpgrades: true,
+            transports: ['websocket', 'polling'],
+        };
+      const socket = io('http://localhost:3000',options);
 
       socket.on('connection', data => console.log(data));
-      socket.on('messages', data => {
+      socket.on('message', data => {
         console.log(data);
         document.getElementById('app').innerHTML += `
           <li>
             <div>
-              <h2>${data.idea}</h2>
-              <p>${data.description}</p>
+              <h2>${data}</h2>
+              <p>${data}</p>
             </div>
           </li>
         `;

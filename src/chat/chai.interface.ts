@@ -36,11 +36,11 @@ export interface ISupportRequestService {
 export interface ISupportRequestClientService {
     createSupportRequest(data: CreateSupportRequestDto): Promise<SupportRequest[]>;
     markMessagesAsReadClient(params: MarkMessagesAsReadDto);
-//    getUnreadCount(supportRequest: ID): Promise<Message[]>;
+    getUnreadCountClient(supportRequest: ID): Promise<Message[]>;
 }
   
 export interface ISupportRequestEmployeeService {
-//    markMessagesAsRead(params: MarkMessagesAsReadDto);
-//    getUnreadCount(supportRequest: ID): Promise<Message[]>;
-//    closeRequest(supportRequest: ID): Promise<void>;
+    markMessagesAsRead(params: MarkMessagesAsReadDto);
+    getUnreadCount(supportRequest: ID): Promise<Message[]>;
+    closeRequest(supportRequest: ID): Promise<void>;
 }
